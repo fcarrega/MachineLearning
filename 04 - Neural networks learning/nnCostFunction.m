@@ -62,9 +62,30 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Add bias unit to X
+X = [ones(m, 1) X];
 
+% Compute a2
+a2 = sigmoid(Theta1 * X')';
 
+% Add bias unit to a2
+a2 = [ones(size(a2, 1), 1) a2];
 
+% Compute h
+h = sigmoid(Theta2 * a2')';
+
+for i = 1:size(X,1)
+
+  % Build y vector
+  vec_y = zeros(num_labels, 1);
+  vec_y(mod(y(i), num_labels) + 1) = 1;
+  
+  for k = 1:num_labels
+    J = J + (- vec_y(k) * log(h(i, k))) - (1-vec_y(k)) * log (1 - h(i, k));
+  end
+end
+
+J = J / m;
 
 
 
