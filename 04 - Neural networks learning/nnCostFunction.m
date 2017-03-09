@@ -74,32 +74,39 @@ a2 = [ones(size(a2, 1), 1) a2];
 % Compute h
 h = sigmoid(Theta2 * a2')';
 
+% For each training example
 for i = 1:size(X,1)
 
   % Build y vector
   vec_y = zeros(num_labels, 1);
-  vec_y(mod(y(i), num_labels) + 1) = 1;
+  vec_y(y(i)) = 1;
   
+  % For each class
   for k = 1:num_labels
+  
+    % Sum cost with existing cost
     J = J + (- vec_y(k) * log(h(i, k))) - (1-vec_y(k)) * log (1 - h(i, k));
   end
 end
 
+% Divide total cost by number of training examples
 J = J / m;
 
+% Initialize regularization term
+reg_term = 0;
 
+% Remove biases from theta matrices
+temp_Theta1 = Theta1(:,2:end);
+temp_Theta2 = Theta2(:,2:end);
 
+% Compute regularization term
+reg_term = sum(sum(temp_Theta1 .^ 2)) + sum(sum(temp_Theta2 .^ 2));
 
+% Final computation of regularization term
+reg_term = reg_term * lambda / (2*m);
 
-
-
-
-
-
-
-
-
-
+% Add regularization term to cost
+J = J + reg_term;
 
 % -------------------------------------------------------------
 
