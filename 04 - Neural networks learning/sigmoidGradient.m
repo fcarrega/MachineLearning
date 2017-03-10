@@ -14,7 +14,7 @@ g = zeros(size(z));
 
 for i = 1:size(z,1)
   for j = 1:size(z,2)
-    g = sigmoid(z(i,j)) * (1 - sigmoid(z(i,j)));
+    g(i,j) = sigmoid(z(i,j)) * (1 - sigmoid(z(i,j)));
   end
 end
 

@@ -108,6 +108,44 @@ reg_term = reg_term * lambda / (2*m);
 % Add regularization term to cost
 J = J + reg_term;
 
+% Backpropagation
+
+Delta = 
+% Loop on each training example
+for t = 1:m
+
+  % Step 1 - Compute feedforward
+  
+  % Initialize layer 1 with X (including bias)
+  a_1 = X(t, :);
+  
+  % Compute z_2
+  z_2 = Theta1 * a_1';
+  
+  % Compute a_2
+  a_2 = [1; sigmoid(z_2)];
+  
+  % Compute z_3
+  z_3 = Theta2 * a_2;
+  
+  % Compute a_3
+  a_3 = sigmoid(z_3);
+  
+  % Step 2 - Compute errors for last layer
+  delta_3 = zeros(num_labels, 1);
+  
+  for k = 1:num_labels
+    delta_3(k) = a_3(k) - vec_y(t, k);
+  end
+  
+  % Step 2 - Compute error for hidden layer
+  delta_2 = (Theta2' * delta_3) .* (a_2.*(1-a_2);
+  delta_2 = delta_2(2:end);
+  
+  
+  
+end
+
 % -------------------------------------------------------------
 
 % =========================================================================
