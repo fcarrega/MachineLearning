@@ -83,7 +83,6 @@ for i = 1:size(X,1)
   
   % For each class
   for k = 1:num_labels
-  
     % Sum cost with existing cost
     J = J + (- vec_y(k) * log(h(i, k))) - (1-vec_y(k)) * log (1 - h(i, k));
   end
@@ -110,7 +109,6 @@ J = J + reg_term;
 
 % Backpropagation
 
-Delta = 
 % Loop on each training example
 for t = 1:m
 
@@ -133,18 +131,30 @@ for t = 1:m
   
   % Step 2 - Compute errors for last layer
   delta_3 = zeros(num_labels, 1);
-  
-  for k = 1:num_labels
-    delta_3(k) = a_3(k) - vec_y(t, k);
-  end
+
+  % Build y vector
+  vec_y = zeros(num_labels, 1);
+  vec_y(y(t)) = 1;  
+
+  delta_3 = a_3 - vec_y;
   
   % Step 2 - Compute error for hidden layer
-  delta_2 = (Theta2' * delta_3) .* (a_2.*(1-a_2);
+  delta_2 = (Theta2' * delta_3) .* (a_2.*(1-a_2));
   delta_2 = delta_2(2:end);
   
-  
+  % Accumulate gradients
+  Theta1_grad = Theta1_grad + delta_2 * a_1;
+  Theta2_grad = Theta2_grad + delta_3 * a_2';
   
 end
+
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
+
+% Add regulatization term except on bias term (fist column)
+Theta1_grad = [Theta1_grad(:,1) Theta1_grad(:,2:end) + (lambda / m) * Theta1(:,2:end)];
+Theta2_grad = [Theta2_grad(:,1) Theta2_grad(:,2:end) + (lambda / m) * Theta2(:,2:end)];
+
 
 % -------------------------------------------------------------
 
@@ -152,6 +162,5 @@ end
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end
