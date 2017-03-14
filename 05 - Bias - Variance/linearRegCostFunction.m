@@ -26,6 +26,9 @@ regTheta(1) = 0;
 % Compute cost function J with regularization term
 J = sum((X * theta - y) .^ 2) / (2*m) + (lambda / (2*m)) * sum(regTheta .^2);
 
+% Compute gradient
+grad = sum((X * theta - y) .* X) / m + (lambda / m) * regTheta';
+
 % =========================================================================
 
 grad = grad(:);
