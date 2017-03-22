@@ -21,11 +21,15 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+% Loop on each example
+for i = 1:size(X,1)
+  distances = zeros(K,1);
+  for k = 1:K
+    distances(k) = norm(X(i,:) - centroids(k, :))^2;
+  end
+  [value, index] = max(distances);
+  idx(i) = index; 
+end
 
 % =============================================================
 
