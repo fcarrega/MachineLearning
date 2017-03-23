@@ -27,7 +27,7 @@ for i = 1:size(X,1)
   for k = 1:K
     distances(k) = norm(X(i,:) - centroids(k, :))^2;
   end
-  [value, index] = max(distances);
+  [value, index] = min(distances);
   idx(i) = index; 
 end
 

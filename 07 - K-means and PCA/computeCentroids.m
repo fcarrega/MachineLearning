@@ -26,15 +26,12 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for k = 1:K
+  matching_examples = (idx(:) == k);
+  centroids(k, :) = (matching_examples' * X) / sum(matching_examples);
+end
 
 % =============================================================
-
 
 end
 
